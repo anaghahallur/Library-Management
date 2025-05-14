@@ -39,36 +39,44 @@ export default function ReturnBook() {
   };
 
   return (
-    <div className="min-h-screen bg-white p-6">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6">📥 Return Issued Book</h2>
+    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-6">
+      <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-md">
+        <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+          📥 Return Issued Book
+        </h2>
 
-      <div className="max-w-md space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Issued Book</label>
-          <select
-            value={bookId}
-            onChange={e => setBookId(e.target.value)}
-            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-green-200"
-          >
-            <option value="">Select a book to return</option>
-            {books.map(b => (
-              <option key={b._id} value={b._id}>
-                {b.title} — issued to {b.issuedTo.email}
-              </option>
-            ))}
-          </select>
-        </div>
+        <div className="space-y-6">
+          {/* Book Dropdown */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Select Issued Book
+            </label>
+            <select
+              value={bookId}
+              onChange={e => setBookId(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-300"
+            >
+              <option value="">-- Select a book --</option>
+              {books.map(b => (
+                <option key={b._id} value={b._id}>
+                  {b.title} — issued to {b.issuedTo.email}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div>
-          <button
-            onClick={handleReturn}
-            disabled={loading || !bookId}
-            className={`bg-green-600 text-white px-4 py-2 rounded-md transition hover:bg-green-700 ${
-              loading || !bookId ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
-          >
-            {loading ? 'Returning...' : 'Return Book'}
-          </button>
+          {/* Button */}
+          <div className="text-right">
+            <button
+              onClick={handleReturn}
+              disabled={loading || !bookId}
+              className={`bg-green-600 text-white px-6 py-2 rounded-xl transition hover:bg-green-700 ${
+                loading || !bookId ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+            >
+              {loading ? 'Returning...' : 'Return Book'}
+            </button>
+          </div>
         </div>
       </div>
     </div>
