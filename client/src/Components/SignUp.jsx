@@ -15,7 +15,7 @@ export default function Signup() {
       });
       alert(res.data.message);
     } catch (err) {
-      alert(err.response?.data?.message || 'Signup failed');
+      alert('Signup failed');
     }
   };
 

@@ -11,10 +11,10 @@ export default function Login({ setUser }) {
     try {
       const res = await axios.post('http://localhost:8800/api/auth/login', { email, password });
       alert(res.data.message);
-      setUser({ id: res.data.userId, role: res.data.role });
-      navigate('/dashboard');
+      setUser({ id: res.data.userId, role: res.data.role }); // Set user state
+      navigate('/dashboard'); // Redirect to dashboard
     } catch (err) {
-      alert(err.response?.data?.message || 'Login failed');
+      alert('Login failed');
     }
   };
 

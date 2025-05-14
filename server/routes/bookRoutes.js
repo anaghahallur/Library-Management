@@ -1,6 +1,7 @@
 import express from 'express';
 import Book from '../models/Book.js';  // ✅ Import the Book model
 import User from '../models/User.js';  // ✅ Import the User model (needed for issue/return)
+import IssuedBook from '../models/IssuedBook.js'; // ✅ Import the new model
 
 const router = express.Router();
 
@@ -39,6 +40,7 @@ router.post('/add', async (req, res) => {
       res.status(500).json({ message: "Server error" });
     }
   });
+
   router.post('/return', async (req, res) => {
     const { bookId } = req.body;
   
@@ -46,8 +48,18 @@ router.post('/add', async (req, res) => {
       const book = await Book.findById(bookId);
       if (!book.issuedTo) return res.status(400).json({ message: "Book was not issued" });
   
+      // ⬅️ Save issue+return record before wiping book fields
+      await IssuedBook.create({
+        title: book.title,
+        author: book.author,
+        userId: book.issuedTo,
+        issueDate: book.issueDate,
+        returnDate: new Date()
+      });
+  
       await User.findByIdAndUpdate(book.issuedTo, { $inc: { booksIssued: -1 } });
   
+      // ⬅️ Reset book issue data
       book.issuedTo = null;
       book.issueDate = null;
       book.returnDate = null;
@@ -59,12 +71,34 @@ router.post('/add', async (req, res) => {
       res.status(500).json({ message: "Server error" });
     }
   });
-  router.get('/history/:userId', async (req, res) => {
+//   router.get('/history/:userId', async (req, res) => {
+//     try {
+//       const books = await IssuedBook.find({ userId: req.params.userId });
+//       res.json(books);
+//     } catch (err) {
+//       console.error("History fetch error:", err.message);
+//       res.status(500).json({ message: "Server error" });
+//     }
+//   });
+  router.get('/list', async (req, res) => {
     try {
-      const books = await Book.find({ issuedTo: req.params.userId });
+      const books = await Book.find().populate('issuedTo', 'email role');
       res.json(books);
     } catch (err) {
+      console.error("Book fetch error:", err.message);
       res.status(500).json({ message: "Server error" });
     }
   });
+  router.delete('/delete/:bookId', async (req, res) => {
+    try {
+      const deletedBook = await Book.findByIdAndDelete(req.params.bookId);
+      if (!deletedBook) return res.status(404).json({ message: 'Book not found' });
+  
+      res.json({ message: 'Book deleted successfully' });
+    } catch (err) {
+      console.error('Delete book error:', err.message);
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
   export default router;

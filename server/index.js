@@ -3,6 +3,10 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 
+import authRoutes from './routes/authRoutes.js';
+import bookRoutes from './routes/bookRoutes.js';
+import userRoutes from './routes/userRoutes.js'; // ✅ Import user routes
+
 dotenv.config(); // Load .env variables
 
 const app = express();
@@ -22,12 +26,10 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
-import authRoutes from './routes/authRoutes.js';
-import bookRoutes from './routes/bookRoutes.js';
-
+// Route handlers
 app.use('/api/auth', authRoutes);
 app.use('/api/books', bookRoutes);
+app.use('/api/users', userRoutes); // ✅ Register user routes
 
 // MongoDB Connection
 const connect = async () => {
