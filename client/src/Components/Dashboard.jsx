@@ -26,10 +26,10 @@ export default function Dashboard({ user }) {
     <div className="min-h-screen bg-white p-6">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
         <h1 className="text-3xl font-bold text-blue-700 mb-4 md:mb-0">
-          Welcome, {user.email} ({user.role})
+          Welcome, {user.email} {user.role}
         </h1>
         <p className="text-sm text-gray-500">
-          Here's your personalized library dashboard.
+          Computer Science Department
         </p>
       </div>
 

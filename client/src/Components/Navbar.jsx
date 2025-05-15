@@ -12,7 +12,7 @@ export default function Navbar({ user, setUser }) {
     <nav className="bg-gray-800 p-4">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         <Link to="/" className="text-white text-2xl font-semibold">
-          📚 Library System
+          📚 Department Library System
         </Link>
 
         <div className="space-x-4">

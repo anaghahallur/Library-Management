@@ -6,7 +6,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white">
-      <h1 className="text-4xl font-bold mb-8 text-gray-800">Library Management System</h1>
+      <h1 className="text-4xl font-bold mb-8 text-gray-800">Department Library</h1>
       <div className="space-x-4">
         <button
           className="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700"
