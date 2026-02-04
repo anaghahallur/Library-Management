@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../axios.js';
 import { Link } from 'react-router-dom';
 
 export default function Dashboard({ user }) {
@@ -7,7 +7,7 @@ export default function Dashboard({ user }) {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8800/api/books/list')
+      .get('/books/list')
       .then(res => setBooks(res.data))
       .catch(err => console.error(err));
   }, []);

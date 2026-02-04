@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import axios from '../axios.js';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login({ setUser }) {
@@ -9,7 +9,7 @@ export default function Login({ setUser }) {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post('http://localhost:8800/api/auth/login', { email, password });
+      const res = await axios.post('/auth/login', { email, password });
       alert(res.data.message);
       setUser({ id: res.data.userId, role: res.data.role }); // Set user state
       navigate('/dashboard'); // Redirect to dashboard

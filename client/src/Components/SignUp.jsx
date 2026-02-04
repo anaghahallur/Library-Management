@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import axios from '../axios.js';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -8,7 +8,7 @@ export default function Signup() {
 
   const handleSignup = async () => {
     try {
-      const res = await axios.post('http://localhost:8800/api/auth/signup', {
+      const res = await axios.post('/auth/signup', {
         email,
         role,
         password

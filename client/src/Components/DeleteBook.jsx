@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../axios.js';
 
 export default function DeleteBook() {
   const [books, setBooks] = useState([]);
@@ -7,14 +7,14 @@ export default function DeleteBook() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8800/api/books/list')
+      .get('/books/list')
       .then(res => setBooks(res.data))
       .catch(err => console.error('Fetch error:', err));
   }, []);
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8800/api/books/delete/${id}`);
+      await axios.delete(`/books/delete/${id}`);
       setBooks(prev => prev.filter(book => book._id !== id));
       setMessage('Book deleted successfully!');
       setTimeout(() => setMessage(''), 3000);

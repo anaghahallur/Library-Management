@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import axios from '../axios.js';
 
 export default function AddBook() {
   const [title, setTitle] = useState('');
@@ -14,7 +14,7 @@ export default function AddBook() {
 
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:8800/api/books/add', {
+      const res = await axios.post('/books/add', {
         title,
         author,
       });
@@ -65,9 +65,8 @@ export default function AddBook() {
             <button
               onClick={handleAdd}
               disabled={loading}
-              className={`bg-blue-600 text-white px-6 py-2 rounded-xl transition hover:bg-blue-700 ${
-                loading ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
+              className={`bg-blue-600 text-white px-6 py-2 rounded-xl transition hover:bg-blue-700 ${loading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
             >
               {loading ? 'Adding...' : 'Add Book'}
             </button>

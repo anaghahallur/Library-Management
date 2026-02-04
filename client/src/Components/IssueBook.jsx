@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../axios.js';
 
 export default function IssueBook() {
   const [books, setBooks] = useState([]);
@@ -10,12 +10,12 @@ export default function IssueBook() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8800/api/books/list')
+      .get('/books/list')
       .then(res => setBooks(res.data))
       .catch(err => console.error('Error fetching books:', err));
 
     axios
-      .get('http://localhost:8800/api/users/list') // ensure this backend route exists
+      .get('/users/list') // ensure this backend route exists
       .then(res => setUsers(res.data))
       .catch(err => console.error('Error fetching users:', err));
   }, []);
@@ -28,14 +28,14 @@ export default function IssueBook() {
 
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:8800/api/books/issue', {
+      const res = await axios.post('/books/issue', {
         bookId,
         userId,
       });
       alert(res.data.message);
       setBookId('');
       setUserId('');
-      const updatedBooks = await axios.get('http://localhost:8800/api/books/list');
+      const updatedBooks = await axios.get('/books/list');
       setBooks(updatedBooks.data);
     } catch (err) {
       alert(err?.response?.data?.message || 'An error occurred while issuing the book.');
@@ -91,9 +91,8 @@ export default function IssueBook() {
             <button
               onClick={handleIssue}
               disabled={loading || !bookId || !userId}
-              className={`bg-blue-600 text-white px-6 py-2 rounded-xl transition hover:bg-blue-700 ${
-                loading || !bookId || !userId ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
+              className={`bg-blue-600 text-white px-6 py-2 rounded-xl transition hover:bg-blue-700 ${loading || !bookId || !userId ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
             >
               {loading ? 'Issuing...' : 'Issue Book'}
             </button>

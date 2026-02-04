@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../axios.js';
 
 export default function ReturnBook() {
   const [books, setBooks] = useState([]);
@@ -8,7 +8,7 @@ export default function ReturnBook() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8800/api/books/list')
+      .get('/books/list')
       .then(res => {
         const issuedBooks = res.data.filter(book => book.issuedTo);
         setBooks(issuedBooks);
@@ -27,7 +27,7 @@ export default function ReturnBook() {
 
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:8800/api/books/return', { bookId });
+      const res = await axios.post('/books/return', { bookId });
       alert(res.data.message || 'Book returned successfully!');
       setBooks(books.filter(book => book._id !== bookId));
       setBookId('');
@@ -70,9 +70,8 @@ export default function ReturnBook() {
             <button
               onClick={handleReturn}
               disabled={loading || !bookId}
-              className={`bg-green-600 text-white px-6 py-2 rounded-xl transition hover:bg-green-700 ${
-                loading || !bookId ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
+              className={`bg-green-600 text-white px-6 py-2 rounded-xl transition hover:bg-green-700 ${loading || !bookId ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
             >
               {loading ? 'Returning...' : 'Return Book'}
             </button>
