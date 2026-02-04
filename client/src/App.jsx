@@ -1,16 +1,16 @@
 // App.jsx
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
-import Navbar from './components/Navbar';
-import Signup from './components/Signup';
-import Login from './components/Login';
-import Dashboard from './components/Dashboard';
-import AddBook from './components/AddBook';
-import Home from './components/Home';
-import BookList from './components/BookList';
-import IssueBook from './components/IssueBook';
-import ReturnBook from './components/ReturnBook';
-import DeleteBook from './components/DeleteBook';
+import Navbar from './Components/Navbar';
+import Signup from './Components/SignUp';
+import Login from './Components/Login';
+import Dashboard from './Components/Dashboard';
+import AddBook from './Components/AddBook';
+import Home from './Components/Home';
+import BookList from './Components/BookList';
+import IssueBook from './Components/IssueBook';
+import ReturnBook from './Components/ReturnBook';
+import DeleteBook from './Components/DeleteBook';
 
 function App() {
   const [user, setUser] = useState(null);
